@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <meta charset="UTF-8">
+        <title>Mini Energy Selling Application</title>
+        <h2>Mini Energy Selling Application</h2>
+    </head>
+</head>
+<body>
+<script th:inline="javascript" type="text/javascript">
+function UserAction() {
+const thisForm = document.getElementById('form');
+    const formData = new FormData(thisForm).entries()
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+             alert(this.responseText);
+         }
+    };
+    xhttp.open("POST", "http://energysellingappservice-env.eba-av8bvmmx.us-east-2.elasticbeanstalk.com/MiniEnergySellingApplication/submit-energy-details-api", false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(Object.fromEntries(formData)));
+
+}
+
+
+</script>
+<form id="form">
+    <table>
+        <tbody>
+        <tr>
+            <td><label for="Date">Date:</label></td>
+            <td><input type="date" id="date" name="date"></td>
+        </tr>
+        <tr>
+            <td><label for="energyType">Energy Type:</label></td>
+            <td><input list="energyType" name="energyType">
+                <datalist id="energyType">
+                    <option value="ELECRICITY">
+                    <option value="GAS">
+                </datalist>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="price">Price:</label></td>
+            <td><input type="text" id="price" name="price"></td>
+        </tr>
+        <tr>
+            <td><label for="Units">Units:</label></td>
+            <td><input list="units" name="units">
+                <datalist id="units">
+                    <option value="$">
+                    <option value="¢">
+                </datalist>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" onclick="UserAction()"></td>
+        </tr>
+        <tbody>
+
+    </table>
+</form>
+</body>
+</html>

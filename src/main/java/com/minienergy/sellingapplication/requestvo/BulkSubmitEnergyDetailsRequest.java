@@ -14,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubmitEnergyDetailsRequest {
+public class BulkSubmitEnergyDetailsRequest {
     private List<DailyEnergyDetails> energyDetails;
 }

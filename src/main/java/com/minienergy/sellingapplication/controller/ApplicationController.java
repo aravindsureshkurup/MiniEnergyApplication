@@ -1,6 +1,8 @@
 package com.minienergy.sellingapplication.controller;
 
-import com.minienergy.sellingapplication.requestvo.SubmitEnergyDetailsRequest;
+import com.minienergy.sellingapplication.exception.EnergyAppException;
+import com.minienergy.sellingapplication.model.DailyEnergyDetails;
+import com.minienergy.sellingapplication.requestvo.BulkSubmitEnergyDetailsRequest;
 import com.minienergy.sellingapplication.responsevo.DailyEnergyDetailsResponse;
 import com.minienergy.sellingapplication.responsevo.SubmitEnergyDetailsResponse;
 import com.minienergy.sellingapplication.service.ApplicationService;
@@ -19,8 +21,9 @@ public class ApplicationController {
     @Autowired
     ApplicationService applicationService;
 
+
     @PostMapping(value = "submit-energy-details-api")
-    public ResponseEntity<SubmitEnergyDetailsResponse> submitEnergyDetailsByDate(@RequestBody SubmitEnergyDetailsRequest request) throws Exception {
+    public ResponseEntity<SubmitEnergyDetailsResponse> submitEnergyDetailsByDate(@RequestBody DailyEnergyDetails request) throws EnergyAppException {
         try {
             return ResponseEntity.ok(applicationService.submitEnergyDetailsByDate(request));
         } catch (Exception e) {
@@ -29,8 +32,18 @@ public class ApplicationController {
         }
     }
 
+    @PostMapping(value = "bulk-submit-energy-details-api")
+    public ResponseEntity<SubmitEnergyDetailsResponse> submitEnergyDetailsByDateBulk(@RequestBody BulkSubmitEnergyDetailsRequest request) throws EnergyAppException {
+        try {
+            return ResponseEntity.ok(applicationService.submitEnergyDetailsByDateBulk(request));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
     @GetMapping(value = "get-all-daily-energy-details-api")
-    public ResponseEntity<DailyEnergyDetailsResponse> getAllDailyEnergyDetails() throws Exception {
+    public ResponseEntity<DailyEnergyDetailsResponse> getAllDailyEnergyDetails() throws EnergyAppException {
         try {
             return ResponseEntity.ok(applicationService.getAllDailyEnergyDetails());
         } catch (Exception e) {
